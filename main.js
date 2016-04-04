@@ -89,6 +89,7 @@ $(document).ready(function () {
             latitude: latitude,
             longitude: longitude,
             category: document.share.universe.value,
+            image: document.share.fileToUpload.value,
         };
 
         //prevents page from refreshing when story is submitted
@@ -111,11 +112,13 @@ $(document).ready(function () {
         //create a marker based on author's location
         story.marker = L.marker([story.latitude, story.longitude], {
             icon: icons[story.category]
-        }).bindPopup('<strong>' + story.title + '</strong>' + '<br>' + story.body + '<br><em>' + story.name + '</em>').
+        }).bindPopup('<strong>' + story.title + '</strong>' + '<br>' + story.body + '<br><em>' + story.name + '</em>' + story.image).
         addTo(mymap);
 
         //push story object onto "stories" database so that it can be toggled through top-nav
         stories.push(story);
+
+
     });
 
     // create map
