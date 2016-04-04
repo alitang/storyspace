@@ -68,15 +68,42 @@ $(document).ready(function () {
         $('section#contact-overlay').css('visibility', 'hidden');
     });
 
-    //share overlay
-    $('nav#top-nav ul li#share a').click(function () {
-        //console.log("clicked share button");
-        $('section#share-overlay').css('visibility', 'visible');
+    $('nav#top-nav ul li#share a').click(function (event) {
+        console.log("clicked share button");
+        //event.stopPropagation();
+        //$('section#share-overlay').css('visibility', 'visible');
+        $('#dialog').dialog('open');
+    });
+    
+    $('body').bind('click', function(e) {
+        if($('#dialog').dialog('isOpen')
+            && !$(e.target).is('.ui-dialog, a')
+            && !$(e.target).closest('.ui-dialog').length
+        ) {
+            $('#dialog').dialog('close');
+        }
     });
 
-    //share overlay close
+    //share overlay
+    $('#dialog').dialog({
+        autoOpen: false,
+        modal: false,
+        draggable: false,
+        resizable: false,
+        position:[250,65],
+        width:800,
+        //height:600,
+//        open: function() {
+//            $('.ui-widget-overlay').bind('click', function() {
+//                $('#dialog').dialog('close');
+//            })
+//        }
+    });
+    
+     //share overlay close
     $('#share-overlay nav#share-close a').click(function () {
-        $('section#share-overlay').css('visibility', 'hidden');
+        //$('section#share-overlay').css('visibility', 'hidden');
+        $('#dialog').dialog('close');
     });
 
     //share overlay process form
@@ -117,8 +144,6 @@ $(document).ready(function () {
 
         //push story object onto "stories" database so that it can be toggled through top-nav
         stories.push(story);
-
-
     });
 
     // create map
